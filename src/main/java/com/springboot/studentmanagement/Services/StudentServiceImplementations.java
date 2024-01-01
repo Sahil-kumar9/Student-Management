@@ -39,4 +39,13 @@ public class StudentServiceImplementations implements StudentService{
 
         return this.studentRepository.findById(student_id);
     }
+
+    @Override
+    public void deleteStudent(Long student_id) {
+        // Check if Student Id is Present or !
+        if(!studentRepository.existsById(student_id)){
+            throw new NotFound("Student Id " +student_id+" not Found...");
+        }
+        this.studentRepository.deleteById(student_id);
+    }
 }
