@@ -1,13 +1,13 @@
-package com.learnspring.learnspring;
+package com.springboot.studentmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LearnSpringApplication {
+public class studentmanagement {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LearnSpringApplication.class, args);
+		SpringApplication.run(studentmanagement.class, args);
 	}
 
 }
