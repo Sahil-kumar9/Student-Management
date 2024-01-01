@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface StudentService {
         Students insertStudent(Students students);
         List<Students> getAllStudents();
+
+        Optional<Students> getStudents(Long student_id);
 }
