@@ -30,13 +30,6 @@ public class Students {
         this.calculateAge();
     }
 
-//    public Students(String student_name, String student_email, LocalDate student_dob, int student_age) {
-//        this.student_name = student_name;
-//        this.student_email = student_email;
-//        this.student_dob = student_dob;
-//        this.student_age = student_age;
-//    }
-
     @PrePersist
     @PreUpdate
     private void calculateAge(){

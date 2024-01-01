@@ -22,5 +22,11 @@ public class StudentController {
         return this.studentService.insertStudent(students);
     }
 
+    // For Display All Students
+    @GetMapping()
+    public List<Students> getAllStudents(){
+        return this.studentService.getAllStudents();
+    }
+
 
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service @AllArgsConstructor
@@ -21,5 +22,11 @@ public class StudentServiceImplementations implements StudentService{
             throw new Duplicate("Email Already "+students.getStudent_email()+"Exists....");
         }
        return this.studentRepository.save(students);
+    }
+
+    @Override
+    public List<Students> getAllStudents() {
+        return this.studentRepository.findAll()
+                .stream().toList();
     }
 }
