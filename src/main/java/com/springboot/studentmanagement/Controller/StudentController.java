@@ -1,7 +1,9 @@
 package com.springboot.studentmanagement.Controller;
 
 import com.springboot.studentmanagement.Entities.Students;
+import com.springboot.studentmanagement.Exceptions.Duplicate;
 import com.springboot.studentmanagement.Exceptions.NotFound;
+import com.springboot.studentmanagement.Imports.UpdateStudentADetails;
 import com.springboot.studentmanagement.Services.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,19 @@ public class StudentController {
 
    // Inserting Students Data
     @PostMapping()
-    public Students insertStudent(@RequestBody Students students){
-        return this.studentService.insertStudent(students);
+    public ResponseEntity<Map<String,String>> insertStudent(@RequestBody Students students){
+        //return this.studentService.insertStudent(students);
+        try{
+            Map<String,String> response = new HashMap<>();
+            response.put("Message:","Student Data Saved Successfully!!!");
+            this.studentService.insertStudent(students);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }catch (Duplicate duplicate){
+            Map<String,String> response = new HashMap<>();
+            response.put("Message:",duplicate.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
     }
 
     // For Display All Students Data
@@ -46,17 +59,29 @@ public class StudentController {
     public ResponseEntity<Map<String,String>> deleteStudent(@PathVariable("student_id") Long student_id){
        try {
            Map<String,String> response = new HashMap<>();
-           response.put("Message","Deleted Sucessfullt");
+           response.put("Message:","Deleted Sucessfullt");
            this.studentService.deleteStudent(student_id);
            return ResponseEntity.status(HttpStatus.OK).body(response);
        }catch (NotFound notFound){
            Map<String,String> response = new HashMap<>();
-           response.put("Message",notFound.getMessage());
+           response.put("Message:",notFound.getMessage());
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
        }
-
-
     }
 
+    // For Updating Students Data
+    @PutMapping("{student_id}")
+    public ResponseEntity<Map<String,String>> updateStudent(@RequestBody UpdateStudentADetails updateStudentADetails,@PathVariable("student_id")Long student_id){
+        try{
+            this.studentService.updateStudent(updateStudentADetails,student_id);
+            Map<String,String> response = new HashMap<>();
+            response.put("Message:","Updated Sucessfully");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Duplicate duplicate){
+            Map<String,String> response = new HashMap<>();
+            response.put("Message:",duplicate.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 
 }
